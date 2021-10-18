@@ -19,7 +19,12 @@ class TextFieldPageState extends State<TextFieldPage> {
 
   @override
   Widget build(BuildContext context) {
-    return buildPage(_buildBody(), Text("TextField Max Words Limit"));
+    return buildPage(
+        _buildBody(),
+        const Text(
+          "TextField Max Words Limit",
+          style: TextStyle(fontSize: 16, color: Colors.black),
+        ));
   }
 
   Widget _buildBody() {
@@ -44,13 +49,13 @@ class TextFieldPageState extends State<TextFieldPage> {
                 "TextField",
                 style: TextStyle(fontSize: 16, color: Colors.black),
               ),
-              _buildComputeMnemonic(),
+              _buildCompute(),
             ],
           ),
           TextInputFieldWidget(
             textInputFormatters: [
               FilteringTextInputFormatter.allow(RegExp(r"[a-z\s_-]+")),
-              MaxWordTextInputFormater(maxWords: 6)
+              MaxWordTextInputFormater(maxWords: 6, currentLength: chageCount)
             ],
             hintText: "please fill words ",
             maxLines: 4,
@@ -61,7 +66,7 @@ class TextFieldPageState extends State<TextFieldPage> {
     );
   }
 
-  Widget _buildComputeMnemonic() {
+  Widget _buildCompute() {
     return RichText(
         text: TextSpan(
             style: const TextStyle(fontSize: 14, color: Color(0xFF909399)),
@@ -77,6 +82,12 @@ class TextFieldPageState extends State<TextFieldPage> {
         ]));
   }
 
+  void chageCount(int count) {
+    setState(() {
+      _count = count;
+    });
+  }
+
   Scaffold buildPage(
     Widget body,
     Widget? titleWidget,
@@ -88,7 +99,8 @@ class TextFieldPageState extends State<TextFieldPage> {
         backgroundColor: _color,
         // status bar color
         automaticallyImplyLeading: false,
-        systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: _color),
+        systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: _color, statusBarIconBrightness: Brightness.dark),
         foregroundColor: _color,
         shadowColor: Colors.transparent,
         title: titleWidget,
